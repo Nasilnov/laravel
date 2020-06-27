@@ -81,13 +81,14 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                  Привет Мир!
+                  Привет Миррррр!
                 </div>
 
                 <div class="links">
                     <a href="/">Домашняя</a>
-                    <a href="/info.html">Информация</a>
-                    <a href="/news.html">Новости</a>
+                    <a href="/news/category">Новости</a>
+                    <a href="/aut">Авторизация</a>
+
                 </div>
             </div>
         </div>

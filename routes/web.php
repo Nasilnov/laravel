@@ -17,10 +17,11 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/info.html', function () {
-    return view('info');
-});
+Route::get('/aut', 'AuthController@auth');
 
-Route::get('/news.html', function () {
-    return view('news');
+Route::group(['prefix' => 'news'], function () {
+    Route::get('/category', 'NewsController@category');
+    Route::get('/category/{id}', 'NewsController@categoryId')->where('id', '\d+');
+    Route::get('/{id}', 'NewsController@newsId')->where('id', '\d+');
+    Route::get('/add', 'NewsController@newsAdd');
 });
