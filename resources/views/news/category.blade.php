@@ -1,5 +1,16 @@
-@foreach($category as $n)
-    <a href="/news/category/{{$n['id']}}">
-        <h1>{{$n['id']}} -  {{$n['name']}}</h1>
+@extends('layouts.app')
+@section('content')
+    @forelse ($category as $n)
+    <a href="{{route('categoryId', ['id' => $n['id']])}}">
+        <h3>{{$n['id']}} -  {{$n['name']}}</h3>
     </a>
-@endforeach
+    @empty
+        Пусто
+    @endforelse
+
+    <nav class="blog-pagination">
+        <a class="btn btn-outline-primary" href="#">Older</a>
+        <a class="btn btn-outline-secondary disabled" href="#" tabindex="-1" aria-disabled="true">Newer</a>
+    </nav>
+@stop
+

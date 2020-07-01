@@ -13,15 +13,38 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+//Route::get('/', function () {
+//    return view('home');
+//});
 
-Route::get('/aut', 'AuthController@auth');
+Route::get('/', [
+    'uses' => 'HomeController@index',
+    'as' => 'home'
+]);
+
+Route::get('/aut', [
+    'uses' => 'AuthController@auth',
+    'as' => 'aut'
+]);
 
 Route::group(['prefix' => 'news'], function () {
-    Route::get('/category', 'NewsController@category');
-    Route::get('/category/{id}', 'NewsController@categoryId')->where('id', '\d+');
-    Route::get('/{id}', 'NewsController@newsId')->where('id', '\d+');
-    Route::get('/add', 'NewsController@newsAdd');
+    Route::get('/', [
+        'uses' => 'NewsController@category',
+        'as' => 'news'
+    ]);
+
+    Route::get('/category/{id}', [
+        'uses' => 'NewsController@categoryId',
+        'as' => 'categoryId'
+    ])->where('id', '\d+');
+
+    Route::get('/{id}', [
+        'uses' =>  'NewsController@newsId',
+        'as' => 'newsId'
+    ])->where('id', '\d+');
+
+    Route::get('/category/{id}/add', [
+        'uses' => 'NewsController@newsAdd',
+        'as' => 'newsAdd'
+    ])->where('id', '\d+');
 });

@@ -109,15 +109,20 @@ class NewsController extends Controller
 
     public function newsId(int $id)
     {
-        $news = 'Новость не найдена';
+        $news = ['text' => 'Новость не найдена'];
         foreach ($this->news as $n) {
             if ($n['id'] == $id) {
-                $news = $n['text'];
+                $news = $n;
                 }
         }
         return view('news.news_id', ['news' => $news]);
     }
-    public function newsAdd() {
-        return view('news.add', ['category_id' => request()->get('category_id')]);
+    public function newsAdd(int $id) {
+        foreach ($this->category as $n) {
+            if ($n['id'] == $id) {
+                $name = $n['name'];
+            }
+        }
+        return view('news.add', ['name' => $name]);
     }
 }

@@ -1,8 +1,14 @@
-@foreach($news as $n)
+@extends('layouts.app')
+@section('content')
+    @forelse ($news as $n)
     @if( $n['category_id'] == $id)
-        <a href="/news/{{$n['id']}}">
-            <h1>{{$n['id']}} -  {{$n['title']}}</h1>
+        <a href="{{ route('newsId', ['id' => $n['id']])}}">
+            <h3>{{$n['id']}} -  {{$n['title']}}</h3>
+            <p>{!! $n['description'] !!}</p>
         </a>
     @endif
-@endforeach
-<a href="/news/add?category_id={{$id}}">Добавить новость</a>
+    @empty
+        Пусто
+    @endforelse
+    <a href="{{route('newsAdd', ['id' => $id])}}">Добавить новость</a>
+@stop
