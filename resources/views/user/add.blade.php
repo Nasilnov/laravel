@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
+
     <h2>Форма добавления пользователя</h2>
     <form action="{{route('saveUser')}}" method="post">
         @csrf

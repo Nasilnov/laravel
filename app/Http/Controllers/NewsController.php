@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
-    protected $category = [
+
+        protected $category = [
         [
           'id' => 1,
           'name' => 'Новости культуры'
