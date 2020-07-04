@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     @forelse ($category as $n)
-    <a href="{{route('categoryId', ['id' => $n['id']])}}">
+    <a href="{{route('categoryId', ['id' => $n['id'] ]) }}">
         <h3>{{$n['id']}} -  {{$n['name']}}</h3>
     </a>
     @empty

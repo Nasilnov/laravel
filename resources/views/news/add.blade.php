@@ -2,14 +2,15 @@
 @section('content')
     <h3>Категория новостей - {{$name}}</h3><br>
 
-<form action="#" method="post">
+<form action="{{ route('saveNews') }}" method="post">
     @csrf
+    <input type="text" style="display: none" name="category_id" value="{{$category_id}}">
     <label for="title">Заголовок</label>
-    <input type="text" name="title"><br><br>
+    <input type="text" name="title" value="{{old('title')}}" class="form-control">
     <label for="description">Описание</label>
-    <input type="text" name="description"><br><br>
+    <input type="text" name="description"  value="{{old('description')}}" class="form-control">
     <label for="text">Содержание</label>
-    <textarea name="text" cols="50" rows="20"></textarea><br>
-    <input type="submit" value="жми!">
+    <textarea name="text" cols="50" rows="10" class="form-control">{{old('text')}}</textarea>
+    <button type="submit" class="btn btn-success">Жми!</button>
 </form>
 @stop

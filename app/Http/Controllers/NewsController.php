@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateNewsRequest;
 use Illuminate\Http\Request;
 
 class NewsController extends Controller
@@ -28,71 +29,7 @@ class NewsController extends Controller
             'name' => 'Выборы'
         ]
     ];
-    protected $news = [
-        [
-            'id' => 1,
-            'category_id' => 1,
-            'title' => 'Новости культуры 1',
-            'description' => 'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis eleifend quam',
-            'text' => '1 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis eleifend quam adipiscing vitae proin sagittis nisl rhoncus. Nec feugiat in fermentum posuere urna nec. Sollicitudin aliquam ultrices sagittis orci a scelerisque. Eget est lorem ipsum dolor sit amet consectetur. Ullamcorper dignissim cras tincidunt lobortis feugiat vivamus at. Urna nunc id cursus metus aliquam eleifend mi in'
-        ],
-        [
-            'id' => 2,
-            'category_id' => 1,
-            'title' => 'Новости культуры 2',
-            'description' => 'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis eleifend quam',
-            'text' => '2 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis eleifend quam adipiscing vitae proin sagittis nisl rhoncus. Nec feugiat in fermentum posuere urna nec. Sollicitudin aliquam ultrices sagittis orci a scelerisque. Eget est lorem ipsum dolor sit amet consectetur. Ullamcorper dignissim cras tincidunt lobortis feugiat vivamus at. Urna nunc id cursus metus aliquam eleifend mi in'
-        ],
-        [
-            'id' => 3,
-            'category_id' => 1,
-            'title' => 'Новости культуры 3',
-            'description' => 'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis eleifend quam',
-            'text' => '3 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis eleifend quam adipiscing vitae proin sagittis nisl rhoncus. Nec feugiat in fermentum posuere urna nec. Sollicitudin aliquam ultrices sagittis orci a scelerisque. Eget est lorem ipsum dolor sit amet consectetur. Ullamcorper dignissim cras tincidunt lobortis feugiat vivamus at. Urna nunc id cursus metus aliquam eleifend mi in'
-        ],
-        [
-            'id' => 4,
-            'category_id' => 2,
-            'title' => 'Автоновости 1',
-            'description' => 'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis eleifend quam',
-            'text' => '4 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis eleifend quam adipiscing vitae proin sagittis nisl rhoncus. Nec feugiat in fermentum posuere urna nec. Sollicitudin aliquam ultrices sagittis orci a scelerisque. Eget est lorem ipsum dolor sit amet consectetur. Ullamcorper dignissim cras tincidunt lobortis feugiat vivamus at. Urna nunc id cursus metus aliquam eleifend mi in'
-        ],
-        [
-            'id' => 5,
-            'category_id' => 2,
-            'title' => 'Автоновости 2',
-            'description' => 'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis eleifend quam',
-            'text' => '5 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis eleifend quam adipiscing vitae proin sagittis nisl rhoncus. Nec feugiat in fermentum posuere urna nec. Sollicitudin aliquam ultrices sagittis orci a scelerisque. Eget est lorem ipsum dolor sit amet consectetur. Ullamcorper dignissim cras tincidunt lobortis feugiat vivamus at. Urna nunc id cursus metus aliquam eleifend mi in'
-        ],
-        [
-            'id' => 6,
-            'category_id' => 2,
-            'title' => 'Автоновости 3',
-            'description' => 'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis eleifend quam',
-            'text' => '6 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis eleifend quam adipiscing vitae proin sagittis nisl rhoncus. Nec feugiat in fermentum posuere urna nec. Sollicitudin aliquam ultrices sagittis orci a scelerisque. Eget est lorem ipsum dolor sit amet consectetur. Ullamcorper dignissim cras tincidunt lobortis feugiat vivamus at. Urna nunc id cursus metus aliquam eleifend mi in'
-        ],
-        [
-            'id' => 7,
-            'category_id' => 3,
-            'title' => 'Спорт 1',
-            'description' => 'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis eleifend quam',
-            'text' => '4 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis eleifend quam adipiscing vitae proin sagittis nisl rhoncus. Nec feugiat in fermentum posuere urna nec. Sollicitudin aliquam ultrices sagittis orci a scelerisque. Eget est lorem ipsum dolor sit amet consectetur. Ullamcorper dignissim cras tincidunt lobortis feugiat vivamus at. Urna nunc id cursus metus aliquam eleifend mi in'
-        ],
-        [
-            'id' => 8,
-            'category_id' => 3,
-            'title' => 'Спорт 2',
-            'description' => 'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis eleifend quam',
-            'text' => '5 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis eleifend quam adipiscing vitae proin sagittis nisl rhoncus. Nec feugiat in fermentum posuere urna nec. Sollicitudin aliquam ultrices sagittis orci a scelerisque. Eget est lorem ipsum dolor sit amet consectetur. Ullamcorper dignissim cras tincidunt lobortis feugiat vivamus at. Urna nunc id cursus metus aliquam eleifend mi in'
-        ],
-        [
-            'id' => 9,
-            'category_id' => 3,
-            'title' => 'Спорт 3',
-            'description' => 'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis eleifend quam',
-            'text' => '6 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis eleifend quam adipiscing vitae proin sagittis nisl rhoncus. Nec feugiat in fermentum posuere urna nec. Sollicitudin aliquam ultrices sagittis orci a scelerisque. Eget est lorem ipsum dolor sit amet consectetur. Ullamcorper dignissim cras tincidunt lobortis feugiat vivamus at. Urna nunc id cursus metus aliquam eleifend mi in'
-        ],
-    ];
+
 
     public function category()
     {
@@ -101,28 +38,72 @@ class NewsController extends Controller
 
     public function categoryId(int $id)
     {
+       $newsArr = include storage_path('app/public/news.php');
+//       dd($newsArr);
        return view('news.category_id',[
            'id' => $id,
-           'news' => $this->news
+           'news' => $newsArr
        ] );
     }
 
     public function newsId(int $id)
     {
-        $news = ['text' => 'Новость не найдена'];
-        foreach ($this->news as $n) {
-            if ($n['id'] == $id) {
-                $news = $n;
-                }
-        }
-        return view('news.news_id', ['news' => $news]);
+        $newsArr = include storage_path('app/public/news.php');
+        return view('news.news_id', ['news' => $newsArr[$id], 'id' => $id] );
     }
+
+    public function newsEdit(int $id) {
+        $newsArr = include storage_path('app/public/news.php');
+        $news = $newsArr[$id] ?? [];
+        if (!$news) {
+            return abort(404);
+        }
+        return view('news.edit', ['news' => $news, 'id' => $id] );
+    }
+
+    public function updateNews(CreateNewsRequest $request)
+    {
+
+        $newsArr = include storage_path('app/public/news.php');
+
+                $id = $request->input('id');
+                $newsArr[$id]['title'] = $request->input('title');
+                $newsArr[$id]['description'] = $request->input('description');
+                $newsArr[$id]['text'] = $request->input('text');
+
+        $string = "<?php\n return ".var_export($newsArr, true).';';
+        file_put_contents(storage_path('app/public/news.php'),  $string);
+
+        return view('news.edit', ['news' => $newsArr[$id], 'id' => $id, 'save' => '1']) ;
+    }
+
     public function newsAdd(int $id) {
+        $name = '';
         foreach ($this->category as $n) {
             if ($n['id'] == $id) {
                 $name = $n['name'];
             }
         }
-        return view('news.add', ['name' => $name]);
+        return view('news.add', ['name' => $name, 'category_id' => $id] );
     }
+
+    public function saveNews(CreateNewsRequest $request)
+    {
+
+        $newsArr = include storage_path('app/public/news.php');
+
+
+        $newsArr[] =  [
+            'category_id' => $request->input('category_id'),
+            'title'=> $request->input('title'),
+            'description' => $request->input('description'),
+            'text' => $request->input('text')
+            ];
+
+        $string = "<?php\n return ".var_export($newsArr, true).';';
+        file_put_contents(storage_path('app/public/news.php'),  $string);
+
+        return view('news.edit', ['news' => $newsArr[count($newsArr) - 1], 'id' => count($newsArr) - 1, 'save' => '1']) ;
+    }
+
 }

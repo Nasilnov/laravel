@@ -22,17 +22,28 @@ Route::get('/', [
     'as' => 'home'
 ]);
 
-Route::get('/aut', [
-    'uses' => 'AuthController@auth',
-    'as' => 'aut'
-]);
+Route::group(['prefix' => 'user'], function () {
+
+    Route::get('/', [
+        'uses' => 'AuthController@userAdd',
+        'as' => 'userAdd'
+    ]);
+    Route::match(['post', 'get'], '/add', [
+        'uses' => 'AuthController@saveUser',
+        'as' => 'saveUser'
+    ]);
+    Route::get('/all', [
+        'uses' => 'AuthController@allUser',
+        'as' => 'allUser'
+    ]);
+});
+
 
 Route::group(['prefix' => 'news'], function () {
     Route::get('/', [
         'uses' => 'NewsController@category',
         'as' => 'news'
     ]);
-
     Route::get('/category/{id}', [
         'uses' => 'NewsController@categoryId',
         'as' => 'categoryId'
@@ -47,4 +58,24 @@ Route::group(['prefix' => 'news'], function () {
         'uses' => 'NewsController@newsAdd',
         'as' => 'newsAdd'
     ])->where('id', '\d+');
+
+    Route::get('/{id}/edit', [
+        'uses' => 'NewsController@newsEdit',
+        'as' => 'newsEdit'
+    ]);
+
+    Route::match(['post','get'], '/updateNews', [
+        'uses' => 'NewsController@updateNews',
+        'as' => 'updateNews'
+    ]);
+    Route::match(['post','get'], '/saveNews', [
+        'uses' => 'NewsController@saveNews',
+        'as' => 'saveNews'
+    ]);
+
+    Route::match(['post','get'], '/saveUser', [
+        'uses' => 'NewsController@saveUser',
+        'as' => 'saveNews'
+    ]);
+
 });
