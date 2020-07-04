@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 //    return view('home');
 //});
 
+
 Route::get('/', [
     'uses' => 'HomeController@index',
     'as' => 'home'

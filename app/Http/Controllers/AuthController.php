@@ -11,6 +11,7 @@ class AuthController extends Controller
         return view('user.add');
     }
 
+
     public function saveUser(CreateUserRequest $request)
     {
 
