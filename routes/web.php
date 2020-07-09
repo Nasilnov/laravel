@@ -73,10 +73,10 @@ Route::group(['prefix' => 'news'], function () {
         'uses' => 'NewsController@saveNews',
         'as' => 'saveNews'
     ]);
-
-    Route::match(['post','get'], '/saveUser', [
-        'uses' => 'NewsController@saveUser',
-        'as' => 'saveNews'
-    ]);
+//
+//    Route::match(['post','get'], '/saveUser', [
+//        'uses' => 'UserController@saveUser',
+//        'as' => 'saveUser'
+//    ]);
 
 });

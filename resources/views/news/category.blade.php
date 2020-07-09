@@ -1,8 +1,9 @@
 @extends('layouts.app')
 @section('content')
+{{--    @dd($category);--}}
     @forelse ($category as $n)
-    <a href="{{route('categoryId', ['id' => $n['id'] ]) }}">
-        <h3>{{$n['id']}} -  {{$n['name']}}</h3>
+    <a href="{{route('categoryId', ['id' => $n->id ]) }}">
+        <h3>{{$n->id}} -  {{$n->name}}</h3>
     </a>
     @empty
         Пусто

@@ -5,8 +5,6 @@
     <h2>Форма добавления пользователя</h2>
     <form action="{{route('saveUser')}}" method="post">
         @csrf
-        <label for="login">Логин</label>
-        <input type="text" name="login" class="form-control" placeholder="Введите логин">
         <label for="name">Имя</label>
         <input type="text" name="name" class="form-control" placeholder="Введите ваше имя">
         <label for="password">Пароль</label>

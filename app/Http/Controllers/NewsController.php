@@ -2,45 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Categories;
 use App\Http\Requests\CreateNewsRequest;
+use App\News;
 use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
-
-        protected $category = [
-        [
-          'id' => 1,
-          'name' => 'Новости культуры'
-        ] ,
-        [
-            'id' => 2,
-            'name' => 'Автомобили'
-        ],
-        [
-            'id' => 3,
-            'name' => 'Спорт'
-        ],
-        [
-            'id' => 4,
-            'name' => 'Криптовалюта'
-        ],
-        [
-            'id' => 5,
-            'name' => 'Выборы'
-        ]
-    ];
-
-
-    public function category()
+     public function category()
     {
-        return view('news.category', ['category' => $this->category]);
+        return view('news.category', ['category' => ((new Categories())->getAllCategories())]);
     }
 
     public function categoryId(int $id)
     {
-       $newsArr = include storage_path('app/public/news.php');
-//       dd($newsArr);
+       $newsArr = (new News())->getAllNews();
        return view('news.category_id',[
            'id' => $id,
            'news' => $newsArr
@@ -49,13 +25,12 @@ class NewsController extends Controller
 
     public function newsId(int $id)
     {
-        $newsArr = include storage_path('app/public/news.php');
-        return view('news.news_id', ['news' => $newsArr[$id], 'id' => $id] );
+        $news = (new News())->getFindNews($id);
+        return view('news.news_id', ['news' => $news, 'id' => $id] );
     }
 
     public function newsEdit(int $id) {
-        $newsArr = include storage_path('app/public/news.php');
-        $news = $newsArr[$id] ?? [];
+        $news = (new News())->getFindNews($id);
         if (!$news) {
             return abort(404);
         }
@@ -64,47 +39,43 @@ class NewsController extends Controller
 
     public function updateNews(CreateNewsRequest $request)
     {
+        $id = $request->input('id');
+        $news = [
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'text' => $request->input('text')
+        ];
 
-        $newsArr = include storage_path('app/public/news.php');
+        (new News())->updateNews($news, $id );
 
-                $id = $request->input('id');
-                $newsArr[$id]['title'] = $request->input('title');
-                $newsArr[$id]['description'] = $request->input('description');
-                $newsArr[$id]['text'] = $request->input('text');
+        $news = (new News())->getFindNews($request->input('id'));
+        if (!$news) {
+            return abort(404);
+        }
 
-        $string = "<?php\n return ".var_export($newsArr, true).';';
-        file_put_contents(storage_path('app/public/news.php'),  $string);
-
-        return view('news.edit', ['news' => $newsArr[$id], 'id' => $id, 'save' => '1']) ;
+        return view('news.edit', ['news' => $news, 'id' => $request->input('id'), 'save' => '1']) ;
     }
 
     public function newsAdd(int $id) {
-        $name = '';
-        foreach ($this->category as $n) {
-            if ($n['id'] == $id) {
-                $name = $n['name'];
-            }
-        }
+        $name = (new Categories())->getFindCategories($id)->name;
+
         return view('news.add', ['name' => $name, 'category_id' => $id] );
     }
 
     public function saveNews(CreateNewsRequest $request)
     {
-
-        $newsArr = include storage_path('app/public/news.php');
-
-
-        $newsArr[] =  [
+        $news = [
             'category_id' => $request->input('category_id'),
-            'title'=> $request->input('title'),
+            'title' => $request->input('title'),
             'description' => $request->input('description'),
             'text' => $request->input('text')
-            ];
+        ];
 
-        $string = "<?php\n return ".var_export($newsArr, true).';';
-        file_put_contents(storage_path('app/public/news.php'),  $string);
-
-        return view('news.edit', ['news' => $newsArr[count($newsArr) - 1], 'id' => count($newsArr) - 1, 'save' => '1']) ;
+        $id = (new News())->addNews($news);
+        $news = (new News())->getFindNews($id);
+        if (!$news) {
+            return abort(404);
+        }
+        return view('news.edit', ['news' => $news, 'id' => $id] );
     }
-
 }
