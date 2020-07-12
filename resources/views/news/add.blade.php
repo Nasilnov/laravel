@@ -11,6 +11,11 @@
     <input type="text" name="description"  value="{{old('description')}}" class="form-control">
     <label for="text">Содержание</label>
     <textarea name="text" cols="50" rows="10" class="form-control">{{old('text')}}</textarea>
+
+        @foreach($allCategories as $cat)
+        {{$cat->name}}   <input type="checkbox" name="category_id_m[]" value="{{$cat->id}}"><br>
+        @endforeach
+
     <button type="submit" class="btn btn-success">Жми!</button>
 </form>
 @stop

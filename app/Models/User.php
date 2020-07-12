@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -65,13 +65,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     protected $table = 'users';
+    protected $primaryKey = 'id';
 
-    public function getAllUsers()
-    {
-        return \DB::table($this->table)->get();
-    }
-    public function addUsers($user)
-    {
-        return \DB::table($this->table)->insert($user);
-    }
+//    public function getAllUsers()
+//    {
+//        return \DB::table($this->table)->get();
+//    }
+//    public function addUsers($user)
+//    {
+//        return \DB::table($this->table)->insert($user);
+//    }
 }

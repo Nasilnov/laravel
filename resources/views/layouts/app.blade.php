@@ -36,7 +36,7 @@
     <!-- Custom styles for this template -->
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link href="{{ asset ('blog.css')}}" rel="stylesheet">
+{{--    <link href="{{ asset ('blog.css')}}" rel="stylesheet">--}}
 
 </head>
 
@@ -61,7 +61,7 @@
     </header>
 
 {{--    @include('partials.top-menu')--}}
-    <x-top-menu></x-top-menu>
+    <x-top-menu :categories="$allCategories"></x-top-menu>
 {{--    <x-banner></x-banner>--}}
 {{--    <x-top-news></x-top-news>--}}
 </div>
@@ -83,5 +83,9 @@
         <a href="#">Back to top</a>
     </p>
 </footer>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script type="text/javascript" src="{{asset('js/app.js')}}"></script>
 </body>
 </html>

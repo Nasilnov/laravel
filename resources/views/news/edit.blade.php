@@ -1,14 +1,14 @@
 @extends('layouts.app')
 @section('content')
-
-    Редактирование новости c id - {{$id}}
+{{--    @dd($news);--}}
+    Редактирование новости c id - {{$news->id}}
     @isset($save)
         <p>Новость успешно сохранена</p>
     @endisset
 
 <form action="{{ route('updateNews') }}" method="post">
     @csrf
-    <input type="text" style="display: none" value="{{$id}}" name="id">
+    <input type="text" style="display: none" value="{{$news->id}}" name="id">
     <label for="title">Заголовок</label>
     <input type="text" name="title" value="{{$news->title}}" class="form-control">
     <label for="description">Описание</label>

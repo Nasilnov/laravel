@@ -2,80 +2,79 @@
 
 namespace App\Http\Controllers;
 
-use App\Categories;
+use App\Models\Category;
 use App\Http\Requests\CreateNewsRequest;
-use App\News;
+use App\Models\News;
+use App\Models\NewsToCategory;
 use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
      public function category()
     {
-        return view('news.category', ['category' => ((new Categories())->getAllCategories())]);
+        return view('news.category', ['category' => Category::all()]);
     }
 
-    public function categoryId(int $id)
+    public function categoryId($id)
     {
-       $newsArr = (new News())->getAllNews();
-       return view('news.category_id',[
-           'id' => $id,
-           'news' => $newsArr
-       ] );
+        return view('news.category_id', [
+            'news' => Category::query()->find($id)->news()->paginate(5),
+//            'news' => News::query()->where('category_id', $id )->paginate(5),
+//            'news' => News::paginate(5),
+            'id' => $id
+        ]);
     }
 
     public function newsId(int $id)
     {
-        $news = (new News())->getFindNews($id);
+        $news = News::query()->where('id', $id)->first();
         return view('news.news_id', ['news' => $news, 'id' => $id] );
     }
 
     public function newsEdit(int $id) {
-        $news = (new News())->getFindNews($id);
-        if (!$news) {
-            return abort(404);
-        }
-        return view('news.edit', ['news' => $news, 'id' => $id] );
+        $news = News::query()->where('id', $id)->first();
+        return view('news.edit', ['news' => $news] );
     }
 
     public function updateNews(CreateNewsRequest $request)
     {
         $id = $request->input('id');
-        $news = [
-            'title' => $request->input('title'),
-            'description' => $request->input('description'),
-            'text' => $request->input('text')
-        ];
-
-        (new News())->updateNews($news, $id );
-
-        $news = (new News())->getFindNews($request->input('id'));
-        if (!$news) {
-            return abort(404);
+        $news = News::find($id);
+        $news->title =  $request->input('title');
+        $news->description =  $request->input('description');
+        $news->text =  $request->input('text');
+        if (!$news->save()) {
+            return back();
         }
-
-        return view('news.edit', ['news' => $news, 'id' => $request->input('id'), 'save' => '1']) ;
+        return view('news.edit', ['news' => News::query()->where('id', $id)->first(), 'id' => $request->input('id'), 'save' => '1']) ;
     }
 
     public function newsAdd(int $id) {
-        $name = (new Categories())->getFindCategories($id)->name;
-
+        $name = Category::query()->where('id', $id)->first()->name;
         return view('news.add', ['name' => $name, 'category_id' => $id] );
     }
 
     public function saveNews(CreateNewsRequest $request)
     {
-        $news = [
-            'category_id' => $request->input('category_id'),
-            'title' => $request->input('title'),
-            'description' => $request->input('description'),
-            'text' => $request->input('text')
+//        dd($request);
+        $data = [
+          'category_id' => $request->input('category_id'),
+          'title' => $request->input('title'),
+          'desription' =>  $request->input('description'),
+          'text' =>  $request->input('text')
         ];
-
-        $id = (new News())->addNews($news);
-        $news = (new News())->getFindNews($id);
-        if (!$news) {
-            return abort(404);
-        }
-        return view('news.edit', ['news' => $news, 'id' => $id] );
+          $id = News::create($data)->id;
+          foreach ($request->input('category_id_m') as $cat) {
+              $dataNewCat = [
+                  'category_id' => $cat,
+                  'news_id' => $id
+                  ];
+//              dd($dataNewCat);
+              NewsToCategory::create($dataNewCat);
+          }
+          if (!isset($id)) {
+              return back();
+          }
+        return view('news.edit', ['news' => News::query()->where('id', $id)->first()] );
     }
 }

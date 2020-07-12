@@ -45,12 +45,12 @@ Route::group(['prefix' => 'news'], function () {
         'uses' => 'NewsController@category',
         'as' => 'news'
     ]);
-    Route::get('/category/{id}', [
+    Route::get('/category/{category}', [
         'uses' => 'NewsController@categoryId',
         'as' => 'categoryId'
-    ])->where('id', '\d+');
+    ]);
 
-    Route::get('/{id}', [
+    Route::get('/{news}', [
         'uses' =>  'NewsController@newsId',
         'as' => 'newsId'
     ])->where('id', '\d+');
@@ -60,7 +60,7 @@ Route::group(['prefix' => 'news'], function () {
         'as' => 'newsAdd'
     ])->where('id', '\d+');
 
-    Route::get('/{id}/edit', [
+    Route::get('/{news}/edit', [
         'uses' => 'NewsController@newsEdit',
         'as' => 'newsEdit'
     ]);

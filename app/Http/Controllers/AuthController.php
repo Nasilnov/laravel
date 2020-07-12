@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateUserRequest;
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
@@ -17,18 +17,19 @@ class AuthController extends Controller
     {
 
 
-        $user =  [
-            'name'=> $request->input('name'),
-            'password' => $request->input('password'),
-            'email' => $request->input('email'),
-            'phone' => $request->input('phone')
-        ];
-        (new User())->addUsers($user);
+//        $user =  [
+//            'name'=> $request->input('name'),
+//            'password' => $request->input('password'),
+//            'email' => $request->input('email'),
+//            'phone' => $request->input('phone')
+//        ];
+//        (new User())->addUsers($user);
+        User::create($request->validated());
 
         return redirect()->route('allUser');
     }
 
     public function allUser() {
-        return view('user.all',['users' => (new User())->getAllUsers()]);
+        return view('user.all',['users' => User::all()]);
     }
 }
