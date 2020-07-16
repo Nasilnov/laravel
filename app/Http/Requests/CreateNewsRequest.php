@@ -24,8 +24,7 @@ class CreateNewsRequest extends FormRequest
     public function rules()
     {
         return [
-           'category_id_m' => ['required'],
-           'category_id' => ['max:20'],
+           'category_id_m' => ['required', 'array'],
            'title' => ['required', 'string', 'min:3', 'max:50'],
            'text' => ['required', 'string', 'min:3', 'max:250'],
            'description' => ['required', 'string', 'min:3', 'max:50']

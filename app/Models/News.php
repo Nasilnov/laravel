@@ -10,29 +10,14 @@ class News extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'category_id',
+        'category_id_m',
         'title',
         'description',
         'text'
     ];
 
-//    public function getAllNews()
-//    {
-//        return\DB::table($this->table)->get();
-//    }
-//    public function getFindNews(int $id)
-//    {
-//        return \DB::table($this->table)->where('id', $id)->first();
-//    }
-//
-//    public function updateNews($news, $id)
-//    {
-//       return \DB::table($this->table)->where('id', $id)->update($news);
-//
-//    }
-//
-//    public function addNews($news)
-//    {
-//        return \DB::table($this->table)->insertGetId($news);
-//    }
+    public function categories() {
+        return $this->belongsToMany(Category::class, 'news_to_categories', 'news_id', 'category_id','id');
+    }
+
 }

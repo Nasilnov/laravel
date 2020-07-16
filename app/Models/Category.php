@@ -10,6 +10,7 @@ class Category extends Model
     protected $primaryKey = 'id';
 
     public function news() {
-        return $this->hasMany(News::class, 'category_id');
+//        return $this->hasMany(News::class, 'category_id');
+        return $this->belongsToMany(News::class, 'news_to_categories', 'category_id', 'news_id','id');
     }
 }

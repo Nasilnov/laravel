@@ -18,7 +18,7 @@ class NewsSeeder extends Seeder
         $data = [];
         for ($i = 0; $i < 20; $i++ ) {
             $data[] = [
-                'category_id' => $objFaker->numberBetween($min = 1, $max = 5),
+//                'category_id' => $objFaker->numberBetween($min = 1, $max = 5),
                 'title' => $objFaker->sentence(rand(1,2)),
                 'description' => $objFaker->realText(rand(20,50)),
                 'text' => $objFaker->realText(rand(100,200))

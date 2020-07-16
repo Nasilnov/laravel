@@ -23,6 +23,9 @@ Route::get('/', [
     'as' => 'home'
 ]);
 
+Route::group(['prefix' => 'admin'], function() {
+    Route::resource('/news', Admin\NewsController::class);
+});
 Route::group(['prefix' => 'user'], function () {
 
     Route::get('/', [
@@ -40,6 +43,7 @@ Route::group(['prefix' => 'user'], function () {
 });
 
 
+
 Route::group(['prefix' => 'news'], function () {
     Route::get('/', [
         'uses' => 'NewsController@category',
@@ -55,28 +59,5 @@ Route::group(['prefix' => 'news'], function () {
         'as' => 'newsId'
     ])->where('id', '\d+');
 
-    Route::get('/category/{id}/add', [
-        'uses' => 'NewsController@newsAdd',
-        'as' => 'newsAdd'
-    ])->where('id', '\d+');
-
-    Route::get('/{news}/edit', [
-        'uses' => 'NewsController@newsEdit',
-        'as' => 'newsEdit'
-    ]);
-
-    Route::match(['post','get'], '/updateNews', [
-        'uses' => 'NewsController@updateNews',
-        'as' => 'updateNews'
-    ]);
-    Route::match(['post','get'], '/saveNews', [
-        'uses' => 'NewsController@saveNews',
-        'as' => 'saveNews'
-    ]);
-//
-//    Route::match(['post','get'], '/saveUser', [
-//        'uses' => 'UserController@saveUser',
-//        'as' => 'saveUser'
-//    ]);
-
+    Route::get('/delete/{news}', 'NewsController@deleteNews')->name('deleteNews');
 });
