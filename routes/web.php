@@ -23,41 +23,36 @@ Route::get('/', [
     'as' => 'home'
 ]);
 
-Route::group(['prefix' => 'admin'], function() {
-    Route::resource('/news', Admin\NewsController::class);
-});
-Route::group(['prefix' => 'user'], function () {
+Route::group(['middleware' => 'auth'], function()
+{
+    Route::get('/logout', function () {
+        Auth::logout();
+        return redirect('/');
+    });
 
-    Route::get('/', [
-        'uses' => 'AuthController@userAdd',
-        'as' => 'userAdd'
-    ]);
-    Route::match(['post', 'get'], '/add', [
-        'uses' => 'AuthController@saveUser',
-        'as' => 'saveUser'
-    ]);
-    Route::get('/all', [
-        'uses' => 'AuthController@allUser',
-        'as' => 'allUser'
-    ]);
+    Route::get('/account', 'Account\IndexController@index')->name('account');
+
+    Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
+        Route::get('/admin', 'Admin\IndexController@index')->name('admin');
+        Route::resource('/news', Admin\NewsController::class);
+        Route::resource('/category', Admin\CategoryController::class);
+        Route::resource('/user', Admin\UserController::class);
+    });
+
+});
+
+Route::group(['prefix' => 'user'], function () {
+    Route::put('/save', 'UserController@save')->name( 'user.save');
 });
 
 
 
 Route::group(['prefix' => 'news'], function () {
-    Route::get('/', [
-        'uses' => 'NewsController@category',
-        'as' => 'news'
-    ]);
-    Route::get('/category/{category}', [
-        'uses' => 'NewsController@categoryId',
-        'as' => 'categoryId'
-    ]);
+    Route::get('/', 'NewsController@category')->name('news');
 
-    Route::get('/{news}', [
-        'uses' =>  'NewsController@newsId',
-        'as' => 'newsId'
-    ])->where('id', '\d+');
+    Route::get('/category/{category}', 'NewsController@categoryId')->name( 'categoryId');
 
-    Route::get('/delete/{news}', 'NewsController@deleteNews')->name('deleteNews');
+    Route::get('/{news}', 'NewsController@newsId')->name( 'newsId');
 });
+
+Auth::routes();

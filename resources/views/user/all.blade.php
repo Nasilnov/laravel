@@ -1,6 +1,8 @@
 @extends('layouts.app')
 @section('content')
+{{--    @dd($users)--}}
     @foreach($users as $u)
-        <p>Имя:{{$u->name}}  Телефон:{{$u->phone}}  Email:{{$u->email}}</p>
+        <a href="{{ route('user.edit', ['user' => $u] )}} ">Имя:{{$u->name}}  Телефон:{{$u->phone}}  Email:{{$u->email}}</a><br><br>
+{{--        <a href="#">Имя:{{$u->name}}  Телефон:{{$u->phone}}  Email:{{$u->email}}</a>--}}
     @endforeach
 @stop

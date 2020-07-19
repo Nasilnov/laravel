@@ -1,11 +1,9 @@
 @extends('layouts.app')
 @section('content')
-{{--    @dd($news->category);--}}
     Редактирование новости c id - {{$news->id}}
-{{--    @isset($save)--}}
-{{--        <p>Новость успешно сохранена</p>--}}
-{{--    @endisset--}}
-{{--@if (!empty($errors->all)) dd($errors->all()) @endif--}}
+@if(session()->has('message'))
+    <h3 style="color: red;">{{ session()->get('message') }}</h3>
+@endif
 
 <form action="{{ route('news.update',['news'=> $news]) }}" method="post">
     @method('PUT')

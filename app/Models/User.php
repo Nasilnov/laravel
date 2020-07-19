@@ -44,7 +44,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'is_admin', 'phone'
     ];
 
     /**
@@ -63,16 +63,10 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'is_admin' => 'boolean'
     ];
+
     protected $table = 'users';
     protected $primaryKey = 'id';
 
-//    public function getAllUsers()
-//    {
-//        return \DB::table($this->table)->get();
-//    }
-//    public function addUsers($user)
-//    {
-//        return \DB::table($this->table)->insert($user);
-//    }
 }

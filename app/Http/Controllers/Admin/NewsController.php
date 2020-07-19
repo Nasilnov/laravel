@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateNewsRequest;
-use App\Models\Category;
+//use App\Models\Category;
 use App\Models\News;
-use App\Models\NewsToCategory;
+//use App\Models\NewsToCategory;
 use Illuminate\Http\Request;
-
+use Cookie;
 class NewsController extends Controller
 {
     /**
@@ -45,20 +45,21 @@ class NewsController extends Controller
         }
 
         $data = [
-            'category_id' => $request->input('category_id'),
             'title' => $request->input('title'),
             'description' =>  $request->input('description'),
             'text' =>  $request->input('text')
         ];
+
         $id = News::create($data)->id;
 
         $news = News::query()->where('id', $id)->first();
         $news->categories()->attach($dataNewCat);
 
-        if (!isset($id)) {
+        if ( $id === NULL ) {
             return back();
         }
-        return view('news.edit', ['news' => $news]);
+        return redirect()->route('news.edit', ['news' => $news] )->with('message', 'Сохранено');
+//        return view('news.edit', ['news' => $news]);
     }
 
     /**
@@ -92,10 +93,10 @@ class NewsController extends Controller
      */
     public function update(CreateNewsRequest $request, News $news)
     {
-//        dd($request);
-        $news->title =  $request->input('title');
-        $news->description =  $request->input('description');
-        $news->text =  $request->input('text');
+//        $news->title =  $request->input('title');
+//        $news->description =  $request->input('description');
+//        $news->text =  $request->input('text');
+        $news->fill($request->validated());
         if (!$news->save()) {
             return back();
         }
@@ -105,9 +106,9 @@ class NewsController extends Controller
         }
         $news->categories()->sync($dataNewCat);
 
-        return view('news.edit', ['news' => $news]) ;
+        return redirect()->route('news.edit', ['news' => $news] )->with('message', 'Сохранено');
 
-        //
+//        return view('news.edit', ['news' => $news]) ;
     }
 
     /**

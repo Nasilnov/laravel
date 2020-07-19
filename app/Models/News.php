@@ -10,7 +10,6 @@ class News extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'category_id_m',
         'title',
         'description',
         'text'

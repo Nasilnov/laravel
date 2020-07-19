@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+       return view('category.show');
     }
 
     /**
@@ -25,7 +26,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('category.add');
     }
 
     /**
@@ -34,9 +35,17 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateCategoryRequest $request)
     {
-        //
+
+        $id = Category::create($request->validated())->id;
+
+        if ( $id === NULL ) {
+            return back();
+        }
+
+        $category = Category::query()->where('id', $id)->first();
+        return redirect()->route('category.edit', ['category' => $category] )->with('message', 'Сохранено');
     }
 
     /**
@@ -58,7 +67,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+       return view('category.edit', ['category' => $category]);
     }
 
     /**
@@ -70,7 +79,13 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+
+        $this->validate($request, ['name' => ['required', 'string', 'max:50']]);
+        $category->name = $request->input('name');
+        if (!$category->save()) {
+            return back();
+        }
+        return redirect()->route('category.edit', ['category' => $category])->with('message','Сохранено!!');
     }
 
     /**
@@ -81,8 +96,13 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-      $category->delete();
-//      $category->touch();
-        //
+        if($category->news()->get()->first() === NULL) {
+            $category->news()->detach();
+            $category->delete();
+            return redirect()->route('category.index');
+        }
+        else {
+            return redirect()->route('category.edit', ['category' => $category])->with('message','Эта категория привязана к новостям');
+        }
     }
 }

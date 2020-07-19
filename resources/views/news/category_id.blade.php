@@ -18,7 +18,9 @@
     @empty
         Пусто
     @endforelse
+@if(isset(auth()->user()->is_admin) &&  auth()->user()->is_admin === true)
     <a href="{{route('news.create', ['id' => $id])}}">Добавить новость</a>
+@endif
 
     <nav class="block-pagination">
         {!! $news->links() !!}
