@@ -37,6 +37,7 @@ Route::group(['middleware' => 'auth'], function()
         Route::resource('/news', Admin\NewsController::class);
         Route::resource('/category', Admin\CategoryController::class);
         Route::resource('/user', Admin\UserController::class);
+        Route::get('/parser','Admin\ParserController@index')->name('parser');
     });
 
 });
@@ -53,6 +54,13 @@ Route::group(['prefix' => 'news'], function () {
     Route::get('/category/{category}', 'NewsController@categoryId')->name( 'categoryId');
 
     Route::get('/{news}', 'NewsController@newsId')->name( 'newsId');
+});
+
+Route::group(['middleware' => 'guest'], function () {
+   Route::get('/auth/vk', 'LoginController@loginVk')->name('loginVk');
+   Route::get('/auth/vk/response', 'LoginController@responseVk')->name('responseVk');
+    Route::get('/auth/fb', 'LoginController@loginFb')->name('loginFb');
+    Route::get('/auth/fb/response', 'LoginController@responseFb')->name('responseFb');
 });
 
 Auth::routes();
