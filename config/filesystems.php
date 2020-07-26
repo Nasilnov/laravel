@@ -42,6 +42,12 @@ return [
     */
 
     'disks' => [
+        'publicLogs' => [
+            'driver' => 'local',
+            'root' => public_path('logs'),
+            'url' => env('APP_URL').'/logs',
+            'visibility' => 'public',
+        ],
 
         'local' => [
             'driver' => 'local',
@@ -53,6 +59,10 @@ return [
             'root' => storage_path('app/public'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
+        ],
+        'upload' => [
+            'driver' => 'local',
+            'root'   => base_path().'/public/upload',
         ],
 
         's3' => [

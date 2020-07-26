@@ -34,6 +34,7 @@
                                 <a class="dropdown-item"  href="{{ route('user.index') }}">Пользователи</a>
                                 <a class="dropdown-item"  href="{{ route('category.index') }}">Категории</a>
                                 <a class="dropdown-item"  href="{!! route('news.create') !!}">Добавить новость</a>
+                                <a class="dropdown-item"  href="{!! route('parser') !!}">Парсинг</a>
                         </div>
                     </li>
                     @endif

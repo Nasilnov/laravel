@@ -25,7 +25,9 @@
         </div>
     @endif
     <label for="text">Содержание</label>
-    <textarea name="text" cols="50" rows="10" class="form-control">{{old('text')}}</textarea>
+    <textarea name="text" cols="50" rows="10" class="form-control" id="editor">
+        {!! old('text') !!}
+    </textarea>
     @if($errors->has('text'))
         <div class="alert alert-danger">
             @foreach($errors->get('text') as $error)
@@ -41,3 +43,22 @@
     <button type="submit" class="btn btn-success">Жми!</button>
 </form>
 @stop
+@push('js')
+{{--    <script src="https://cdn.ckeditor.com/ckeditor5/20.0.0/classic/ckeditor.js"></script>--}}
+<script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
+    <script>
+        var options = {
+            filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+            filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token=',
+            filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+            filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token='
+        };
+    </script>
+<script>
+    // CKEDITOR.replace('editor', {
+    //     filebrowserBrowseUrl : '/elfinder/ckeditor'
+    // } );
+    CKEDITOR.replace('editor', options );
+</script>
+
+@endpush

@@ -63,4 +63,9 @@ Route::group(['middleware' => 'guest'], function () {
     Route::get('/auth/fb/response', 'LoginController@responseFb')->name('responseFb');
 });
 
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth', 'admin']], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+});
+
+
 Auth::routes();
